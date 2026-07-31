@@ -1,39 +1,54 @@
-// =============================================================================
-// PROGRAMMING FUNDAMENTALS — Assignment 1
-// =============================================================================
-//
-// TASK: Prime Number Checker
-//
-// Write a C++ program that checks whether a given number is prime.
-//
-// A prime number is a whole number greater than 1 that has no divisors
-// other than 1 and itself (e.g., 2, 3, 5, 7, 11, 13 ...).
-//
-// -----------------------------------------------------------------------------
-// EXPECTED INPUT / OUTPUT EXAMPLES
-// -----------------------------------------------------------------------------
-//
-//   Enter a number: 7
-//   7 is a prime number.
-//
-//   Enter a number: 10
-//   10 is NOT a prime number.
-//
-//   Enter a number: 1
-//   1 is NOT a prime number.
-//
-// -----------------------------------------------------------------------------
-// REQUIREMENTS
-// -----------------------------------------------------------------------------
-// - You MUST implement the logic inside a function (see scaffold below).
-// - Numbers less than 2 are NOT prime — handle this inside the function.
-// - The main() function must call isPrime() and print the result.
-//
-
-// =============================================================================
-// YOUR CODE BELOW — remove the // symbols from the scaffold and fill it in
-// =============================================================================
-
 #include <iostream>
 using namespace std;
 
+// Function to check if a number is prime
+bool isPrime(int num) {
+    if (n <= 1) return false
+    if (n <= 3) return true
+    if (n% 2 == 0 || n % 3 == 0) return false;
+
+    for (int i = 5; i * i <= n; i += 6){
+        if (n % i == 0 || n % (i + 2) == 0)
+
+        return false;
+    }
+    return true;
+    // Numbers less than 2 are not prime
+    if (num < 2) {
+        return false;
+    }
+    
+    // Check for divisors from 2 to num-1
+    for (int i = 2; i < num; i++) {
+        if (num % i == 0) {
+            return false;  // Found a divisor, not prime
+        }
+    }
+    
+    return true;  // No divisors found, number is prime
+}
+
+int main() {
+    int number;
+    
+    cout << "Enter a number: ";
+    cin >> number;
+    
+    if (isPrime(number)) {
+        cout << number << " is a prime number." << endl;
+    } else {
+        cout << number << " is NOT a prime number." << endl;
+    }
+    
+    return 0;
+}g++ -std=c++11 assignment_01_prime_checker.cpp -o prime_checker
+
+./prime_checker
+ 7
+
+./prime_checker
+
+10
+
+./prime_checker
+13
