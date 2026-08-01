@@ -39,6 +39,87 @@
 // YOUR CODE BELOW — remove the // symbols from the scaffold and fill it in
 // =============================================================================
 
+
 #include <iostream>
+#include <iomanip>
 using namespace std;
 
+// Function prototypes
+int calculateSum(int arr[], int n);
+double calculateAverage(int arr[], int n);
+int findMaximum(int arr[], int n);
+int findMinimum(int arr[], int n);
+
+int main() {
+    int n;
+    
+    // Get array size
+    cout << "How many numbers? ";
+    cin >> n;
+    
+    // Check for valid input
+    if (n <= 0) {
+        cout << "Error: N must be a positive integer!" << endl;
+        return 1;
+    }
+    
+    int array[100]; // Maximum 100 numbers
+    
+    // Get numbers from user
+    for (int i = 0; i < n; i++) {
+        cout << "Enter number " << (i + 1) << ": ";
+        cin >> array[i];
+    }
+    
+    // Calculate statistics
+    int sum = calculateSum(array, n);
+    double average = calculateAverage(array, n);
+    int max = findMaximum(array, n);
+    int min = findMinimum(array, n);
+    
+    // Display results
+    cout << "\nResults:" << endl;
+    cout << "Sum: " << sum << endl;
+    cout << "Average: " << fixed << setprecision(1) << average << endl;
+    cout << "Maximum: " << max << endl;
+    cout << "Minimum: " << min << endl;
+    
+    return 0;
+}
+
+// Function to calculate sum
+int calculateSum(int arr[], int n) {
+    int sum = 0;
+    for (int i = 0; i < n; i++) {
+        sum += arr[i];
+    }
+    return sum;
+}
+
+// Function to calculate average
+double calculateAverage(int arr[], int n) {
+    int sum = calculateSum(arr, n);
+    return (double)sum / n;
+}
+
+// Function to find maximum
+int findMaximum(int arr[], int n) {
+    int max = arr[0];
+    for (int i = 1; i < n; i++) {
+        if (arr[i] > max) {
+            max = arr[i];
+        }
+    }
+    return max;
+}
+
+// Function to find minimum
+int findMinimum(int arr[], int n) {
+    int min = arr[0];
+    for (int i = 1; i < n; i++) {
+        if (arr[i] < min) {
+            min = arr[i];
+        }
+    }
+    return min;
+}
