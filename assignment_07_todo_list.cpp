@@ -78,5 +78,139 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <limits>
 using namespace std;
+
+// Function prototypes
+void showMenu();
+void addTask(vector<string>& tasks);
+void viewTasks(const vector<string>& tasks);
+void deleteTask(vector<string>& tasks);
+
+int main() {
+    vector<string> tasks;  // Dynamic list to store tasks
+    int choice;
+    
+    cout << "WELCOME TO THE TO-DO LIST APPLICATION!" << endl;
+    cout << "======================================" << endl;
+    
+    do {
+        showMenu();
+        cin >> choice;
+        
+        // Clear input buffer to handle invalid input
+        if (cin.fail()) {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Invalid input! Please enter a number." << endl;
+            continue;
+        }
+        
+        switch(choice) {
+            case 1:
+                addTask(tasks);
+                break;
+                
+            case 2:
+                viewTasks(tasks);
+                break;
+                
+            case 3:
+                deleteTask(tasks);
+                break;
+                
+            case 4:
+                cout << "\nGoodbye! Have a productive day!" << endl;
+                break;
+                
+            default:
+                cout << "Invalid choice! Please enter a number between 1 and 4." << endl;
+        }
+        
+        cout << endl;
+        
+    } while (choice != 4);
+    
+    return 0;
+}
+
+// Function to display the menu
+void showMenu() {
+    cout << "============================" << endl;
+    cout << "     TO-DO LIST MENU" << endl;
+    cout << "============================" << endl;
+    cout << "1. Add task" << endl;
+    cout << "2. View tasks" << endl;
+    cout << "3. Delete task" << endl;
+    cout << "4. Quit" << endl;
+    cout << "Enter your choice (1-4): ";
+}
+
+// Function to add a task
+void addTask(vector<string>& tasks) {
+    string task;
+    
+    cout << "Enter task: ";
+    cin.ignore();  // Clear the newline character from previous input
+    getline(cin, task);
+    
+    // Trim leading/trailing spaces (optional)
+    if (!task.empty()) {
+        tasks.push_back(task);
+        cout << "Task added: \"" << task << "\"" << endl;
+    } else {
+        cout << "Error: Task description cannot be empty!" << endl;
+    }
+}
+
+// Function to view all tasks
+void viewTasks(const vector<string>& tasks) {
+    if (tasks.empty()) {
+        cout << "Your task list is empty. Add some tasks!" << endl;
+        return;
+    }
+    
+    cout << "Your Tasks:" << endl;
+    for (size_t i = 0; i < tasks.size(); i++) {
+        cout << i + 1 << ". " << tasks[i] << endl;
+    }
+}
+
+// Function to delete a task
+void deleteTask(vector<string>& tasks) {
+    if (tasks.empty()) {
+        cout << "No tasks to delete. Your list is empty!" << endl;
+        return;
+    }
+    
+    // Display current tasks with numbers
+    viewTasks(tasks);
+    
+    cout << "Enter task number to delete: ";
+    int taskNumber;
+    cin >> taskNumber;
+    
+    // Check if input is valid
+    if (cin.fail()) {
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cout << "Invalid input! Please enter a number." << endl;
+        return;
+    }
+    
+    // Check if task number is within range
+    if (taskNumber < 1 || taskNumber > static_cast<int>(tasks.size())) {
+        cout << "Error: Invalid task number! Please enter a number between 1 and " 
+             << tasks.size() << "." << endl;
+        return;
+    }
+    
+    // Save the task description for confirmation message
+    string removedTask = tasks[taskNumber - 1];
+    
+    // Remove the task
+    tasks.erase(tasks.begin() + (taskNumber - 1));
+    
+    cout << "Task \"" << removedTask << "\" has been removed." << endl;
+}
 
